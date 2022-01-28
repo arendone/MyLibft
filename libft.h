@@ -6,7 +6,7 @@
 /*   By: arendon- <arendon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 16:19:59 by arendon-          #+#    #+#             */
-/*   Updated: 2021/11/05 11:28:30 by arendon-         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:09:05 by arendon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim_ver2(char const *s1, char c);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -69,5 +70,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 size_t	ft_maximum_sizet(size_t n, ...);
 size_t	ft_minimum_sizet(size_t n, ...);
 void	ft_putnstr_fd(char *s, int fd, int n);
+void	ft_freearray(char **array);
 
 #endif

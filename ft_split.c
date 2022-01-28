@@ -6,13 +6,13 @@
 /*   By: arendon- <arendon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:30:01 by arendon-          #+#    #+#             */
-/*   Updated: 2021/09/23 16:09:15 by arendon-         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:28:47 by arendon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	countwords(const char *s, int c)
+static int	countwords(const char *s, char c)
 {
 	int	words;
 	int	i;
@@ -39,78 +39,74 @@ static int	countwords(const char *s, int c)
 
 static char	**clean(char **split, int n)
 {
-	int	i;
-
-	i = 0;
-	while (i <= n)
+	while (n >= 0)
 	{
-		free (split[i]);
-		i++;
+		free (split[n - 1]);
+		n--;
 	}
 	free(split);
+	split = NULL;
 	return (NULL);
 }
 
-static char	**newarray(char const *s, char **split, char c)
+static char	*ft_mallocstr(char *ptr, char delim)
+{
+	int		i;
+	char	*strptr;
+
+	i = 0;
+	while (ptr[i] != delim && ptr[i] != '\0')
+		i++;
+	strptr = (char *) malloc((i + 1) * sizeof(char));
+	if (strptr == NULL)
+		return (NULL);
+	ft_strlcpy(strptr, ptr, i + 1);
+	return (strptr);
+}
+
+static char	**write_to_arr(char const *str, char **arr, char c)
 {
 	int	i;
 	int	k;
-	int	start;
-	int	end;
+	int	flag;
 
-	i = 0;
 	k = 0;
-	while (s[k] == c)
-		k++;
-	while (s[k] != '\0')
+	i = 0;
+	flag = 1;
+	while (str[i])
 	{
-		start = k;
-		while (s[k] != c && s[k] != '\0')
+		if (str[i] == c)
+			flag = 1;
+		if ((str[i] != c) && (flag == 1))
+		{
+			arr[k] = (char *) ft_mallocstr(&((char *)str)[i], c);
+			if (arr[k] == NULL)
+			{
+				clean(arr, k);
+				return (NULL);
+			}
 			k++;
-		end = k;
-		split[i] = ft_substr(s, start, end - start);
-		if (split[i] == NULL)
-			clean(split, i);
+			flag = 0;
+		}
 		i++;
-		while (s[k] == c)
-			k++;
 	}
-	split[i] = NULL;
-	return (split);
+	return (arr);
 }
 
-static char	**onewordarray(char const *s, char **split, char c)
+char	**ft_split(char const *str, char c)
 {
-	char	*set;
+	int		wordcount;
+	char	**arr;
 
-	set = &c;
-	split[0] = ft_strtrim(s, set);
-	if (split[0] == NULL)
-		clean(split, 0);
-	split[1] = NULL;
-	return (split);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	int		words;
-	char	**split;
-
-	if (s == NULL)
+	if (str == NULL)
 		return (NULL);
-	words = countwords(s, c);
-	split = (char **)malloc(sizeof(char *) * (words + 1));
-	if (split == NULL)
+	wordcount = countwords(str, c);
+	arr = malloc((wordcount + 1) * sizeof(char *));
+	if (arr == NULL)
 		return (NULL);
-	if (words == 0)
-	{
-		split[0] = NULL;
-		return (split);
-	}
-	if (words == 1)
-	{
-		return (onewordarray(s, split, c));
-	}
-	else
-		return (newarray(s, split, c));
+	arr[wordcount] = NULL;
+	arr = write_to_arr(str, arr, c);
+	if (arr == NULL)
+		return (NULL);
+	return (arr);
 }

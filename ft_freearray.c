@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_freearray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arendon- <arendon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/06 15:47:37 by arendon-          #+#    #+#             */
-/*   Updated: 2022/01/05 00:10:10 by arendon-         ###   ########.fr       */
+/*   Created: 2021/12/29 20:14:03 by arendon-          #+#    #+#             */
+/*   Updated: 2022/01/04 16:19:30 by arendon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	ft_freearray(char **array)
 {
-	char			*sub;
-	unsigned int	i;
+	int	i;
 
-	if (s == NULL)
-		return (NULL);
-	else if (start <= (unsigned int)ft_strlen(s))
+	if (array == NULL)
+		return ;
+	i = 0;
+	while (array[i])
 	{
-		if (ft_strlen(s) < len)
-			sub = (char *)malloc(ft_strlen(s) + 1);
-		else
-			sub = (char *)malloc(len + 1);
-		if (sub == NULL)
-			return (NULL);
-		i = start;
-		ft_strlcpy(sub, &s[i], len + 1);
-		return (sub);
+		free(array[i]);
+		i++;
 	}
-	else
-		return (ft_strdup(""));
+	free(array);
+	array = NULL;
 }
