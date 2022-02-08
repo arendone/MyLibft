@@ -6,7 +6,7 @@
 /*   By: arendon- <arendon-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 16:19:59 by arendon-          #+#    #+#             */
-/*   Updated: 2022/01/05 14:09:05 by arendon-         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:55:45 by arendon-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ size_t	ft_maximum_sizet(size_t n, ...);
 size_t	ft_minimum_sizet(size_t n, ...);
 void	ft_putnstr_fd(char *s, int fd, int n);
 void	ft_freearray(char **array);
+double	ft_atof(char *str);
 
 #endif
